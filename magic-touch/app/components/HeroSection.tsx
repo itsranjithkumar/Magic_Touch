@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaGem,
@@ -16,17 +16,17 @@ const HeroSection: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "Magic Touch transformed me into the most beautiful version of myself on my wedding day.",
+      quote: "&quot;Magic Touch transformed me into the most beautiful version of myself on my wedding day.&quot;",
       author: "Sophia Rodriguez",
       role: "Bride 2023"
     },
     {
-      quote: "Every detail was perfect. The makeup artists are true artists of beauty.",
+      quote: "&quot;Every detail was perfect. The makeup artists are true artists of beauty.&quot;",
       author: "Emily Chen",
       role: "Bride 2022"
     },
     {
-      quote: "I felt like a princess, all thanks to the incredible team at Magic Touch.",
+      quote: "&quot;I felt like a princess, all thanks to the incredible team at Magic Touch.&quot;",
       author: "Olivia Thompson",
       role: "Bride 2024"
     }
@@ -56,7 +56,7 @@ const HeroSection: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials.length]);
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-white to-rose-100 overflow-hidden">
@@ -188,7 +188,7 @@ const HeroSection: React.FC = () => {
                       className="absolute -bottom-10 -right-10 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 max-w-xs"
                     >
                       <FaQuoteRight className="text-rose-500 mb-4" />
-                      <p className="text-gray-800 italic mb-4">"{testimonial.quote}"</p>
+                      <p className="text-gray-800 italic mb-4">{testimonial.quote}</p>
                       <div>
                         <p className="font-semibold text-gray-900">{testimonial.author}</p>
                         <p className="text-sm text-gray-600">{testimonial.role}</p>

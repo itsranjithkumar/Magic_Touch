@@ -1,246 +1,192 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+'use client';
+
+import React from 'react';
+import { motion, Variants } from 'framer-motion';
 import { 
   FaFacebook, 
-  FaTwitter, 
   FaInstagram, 
   FaLinkedin, 
-  FaEnvelope, 
-  FaPhone,
+  FaTwitter,
   FaMapMarkerAlt,
-  FaPaperPlane,
-  FaCode,
-  FaLaptopCode,
-  FaMobileAlt
+  FaEnvelope,
+  FaPhone
 } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
   const socialLinks = [
-    { icon: FaFacebook, href: '#', color: 'text-blue-600' },
-    { icon: FaTwitter, href: '#', color: 'text-sky-500' },
-    { icon: FaInstagram, href: '#', color: 'text-pink-600' },
-    { icon: FaLinkedin, href: '#', color: 'text-blue-700' }
+    { 
+      icon: FaInstagram, 
+      href: "https://instagram.com/magictouch", 
+      color: "text-pink-500 hover:text-pink-600" 
+    },
+    { 
+      icon: FaFacebook, 
+      href: "https://facebook.com/magictouch", 
+      color: "text-blue-600 hover:text-blue-700" 
+    },
+    { 
+      icon: FaLinkedin, 
+      href: "https://linkedin.com/company/magictouch", 
+      color: "text-blue-700 hover:text-blue-800" 
+    },
+    { 
+      icon: FaTwitter, 
+      href: "https://twitter.com/magictouch", 
+      color: "text-sky-500 hover:text-sky-600" 
+    }
   ];
 
-  const services = [
-    { icon: FaCode, title: 'Web Development' },
-    { icon: FaLaptopCode, title: 'UI/UX Design' },
-    { icon: FaMobileAlt, title: 'Mobile Apps' }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
+  const phoneRingVariants: Variants = {
+    ring: {
+      rotate: [0, 10, -10, 10, -10, 0],
       transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
+        duration: 0.5,
+        repeat: Infinity,
+        repeatType: "loop"
       }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100
-      }
-    }
-  };
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubscribed(true);
-      setTimeout(() => setIsSubscribed(false), 3000);
-      setEmail('');
     }
   };
 
   return (
-    <footer className="bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-6 md:px-12 relative overflow-hidden">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-5 bg-pattern pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 relative z-10">
-        {/* Company Info */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6"
-        >
-          <motion.h3 
-            variants={itemVariants}
-            className="text-3xl font-bold text-gray-800 flex items-center space-x-2"
-          >
-            <span>Magic Touch</span>
-            <motion.span 
-              animate={{ 
-                rotate: [0, 10, -10, 0],
-                transition: { 
-                  repeat: Infinity, 
-                  duration: 2 
-                } 
-              }}
-              className="text-blue-500"
-            >
-              ✨
-            </motion.span>
-          </motion.h3>
-          <motion.p 
-            variants={itemVariants}
-            className="text-gray-600"
-          >
-            Innovative digital solutions that transform your business vision into reality.
-          </motion.p>
-        </motion.div>
-
-        {/* Quick Services */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6"
-        >
-          <motion.h4 
-            variants={itemVariants}
-            className="text-xl font-semibold text-gray-700"
-          >
-            Our Services
-          </motion.h4>
-          <motion.ul 
-            variants={containerVariants}
-            className="space-y-4"
-          >
-            {services.map((service, index) => (
-              <motion.li 
-                key={index}
-                variants={itemVariants}
-                className="flex items-center space-x-3 group"
-              >
-                <service.icon className="text-blue-500 group-hover:text-blue-600 transition-colors" />
-                <span className="text-gray-600 group-hover:text-blue-600 transition-colors">
-                  {service.title}
-                </span>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </motion.div>
-
-        {/* Contact Info */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6"
-        >
-          <motion.h4 
-            variants={itemVariants}
-            className="text-xl font-semibold text-gray-700"
-          >
-            Contact Us
-          </motion.h4>
+    <footer className="bg-white border-t border-neutral-200 py-20">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <div className="grid md:grid-cols-3 gap-16">
+          {/* Company Overview */}
           <motion.div 
-            variants={itemVariants}
-            className="space-y-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
           >
-            <div className="flex items-center space-x-3 text-gray-600">
-              <FaEnvelope className="text-blue-500" />
-              <span>info@magictouch.com</span>
-            </div>
-            <div className="flex items-center space-x-3 text-gray-600">
-              <FaPhone className="text-blue-500" />
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div className="flex items-center space-x-3 text-gray-600">
-              <FaMapMarkerAlt className="text-blue-500" />
-              <span>Silicon Valley, CA</span>
+            <h3 className="text-4xl font-extralight tracking-tight text-neutral-900">
+              Magic <span className="font-semibold text-blue-600">Touch</span>
+            </h3>
+            <p className="text-neutral-600 font-light leading-relaxed">
+              Transforming beauty experiences through personalized, innovative styling solutions. We blend artistry with individual expression.
+            </p>
+            
+            {/* Social Links */}
+            <div className="flex space-x-5 pt-4">
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-2xl ${social.color} transition-all duration-300 hover:scale-110`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <social.icon />
+                </motion.a>
+              ))}
             </div>
           </motion.div>
-        </motion.div>
 
-        {/* Newsletter Signup */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6"
-        >
-          <motion.h4 
-            variants={itemVariants}
-            className="text-xl font-semibold text-gray-700"
+          {/* Quick Links */}
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-6"
           >
-            Stay Updated
-          </motion.h4>
-          <motion.form 
-            variants={itemVariants}
-            onSubmit={handleSubscribe}
-            className="space-y-4"
+            <h4 className="text-2xl font-semibold text-neutral-900 mb-6 border-b pb-4 border-neutral-200">
+              Quick Links
+            </h4>
+            <ul className="space-y-4">
+              {[
+                { name: "Home", href: "/" },
+                { name: "Services", href: "/services" },
+                { name: "About Us", href: "/about" },
+                { name: "Contact", href: "/contact" }
+              ].map((link, index) => (
+                <li key={index}>
+                  <a 
+                    href={link.href} 
+                    className="text-neutral-600 hover:text-blue-600 transition-colors font-light"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Contact Information */}
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="space-y-6"
           >
-            <input 
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
-            >
-              <FaPaperPlane />
-              <span>Subscribe</span>
-            </motion.button>
-            <AnimatePresence>
-              {isSubscribed && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="text-green-600 text-sm text-center"
+            <h4 className="text-2xl font-semibold text-neutral-900 mb-6 border-b pb-4 border-neutral-200">
+              Contact Information
+            </h4>
+            <div className="space-y-5">
+              <div className="flex items-center space-x-4">
+                <div className="bg-blue-50 p-3 rounded-full">
+                  <FaEnvelope className="text-blue-600 text-xl" />
+                </div>
+                <div>
+                  <p className="text-neutral-500 text-sm uppercase tracking-wider">Email</p>
+                  <a 
+                    href="mailto:hello@magictouch.com" 
+                    className="text-neutral-900 hover:text-blue-600 transition-colors"
+                  >
+                    hello@magictouch.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <motion.div 
+                  animate="ring"
+                  variants={phoneRingVariants}
+                  className="bg-blue-50 p-3 rounded-full"
                 >
-                  Thanks for subscribing!
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </motion.form>
+                  <FaPhone className="text-blue-600 text-xl" />
+                </motion.div>
+                <div>
+                  <p className="text-neutral-500 text-sm uppercase tracking-wider">Phone</p>
+                  <a 
+                    href="tel:+918123456789" 
+                    className="text-neutral-900 hover:text-blue-600 transition-colors"
+                  >
+                    +91 81234 56789
+                  </a>
+                  <p className="text-green-600 text-xs mt-1 font-medium">
+                    Available Now
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <div className="bg-blue-50 p-3 rounded-full">
+                  <FaMapMarkerAlt className="text-blue-600 text-xl" />
+                </div>
+                <div>
+                  <p className="text-neutral-500 text-sm uppercase tracking-wider">Location</p>
+                  <span className="text-neutral-900">
+                    Silicon Valley, California
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Copyright */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-16 pt-8 border-t border-neutral-200 text-center"
+        >
+          <p className="text-neutral-500 font-light">
+            {new Date().getFullYear()} Magic Touch. All Rights Reserved.
+          </p>
         </motion.div>
       </div>
-
-      {/* Social Links & Copyright */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
-      >
-        <div className="flex space-x-6">
-          {socialLinks.map(({ icon: Icon, href, color }, index) => (
-            <motion.a
-              key={index}
-              href={href}
-              whileHover={{ scale: 1.2, rotate: 15 }}
-              whileTap={{ scale: 0.9 }}
-              className={`${color} transition-all duration-300`}
-            >
-              <Icon size={24} />
-            </motion.a>
-          ))}
-        </div>
-        <p className="text-gray-500">
-          © {new Date().getFullYear()} Magic Touch. All Rights Reserved.
-        </p>
-      </motion.div>
     </footer>
   );
 };

@@ -1,35 +1,12 @@
 'use client';
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useState } from "react";
-import Image from "next/image";
 import { 
   FaEnvelope, 
   FaPhone, 
-  FaMapMarkerAlt, 
-  FaPaperPlane,
-  FaInstagram,
-  FaFacebook,
-  FaWhatsapp
+  FaPaperPlane 
 } from "react-icons/fa";
-
-const socialLinks = [
-  { 
-    icon: FaInstagram, 
-    href: "https://www.instagram.com/magictouch_beauty", 
-    color: "text-pink-500 hover:text-pink-600" 
-  },
-  { 
-    icon: FaFacebook, 
-    href: "https://www.facebook.com/magictouch_beauty", 
-    color: "text-blue-600 hover:text-blue-700" 
-  },
-  { 
-    icon: FaWhatsapp, 
-    href: "https://wa.me/+918123456789", 
-    color: "text-green-500 hover:text-green-600" 
-  }
-];
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -39,7 +16,26 @@ export default function ContactUs() {
     message: ""
   });
 
-  const [activeSection, setActiveSection] = useState<'form' | 'info'>('form');
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  const iconAnimations: Variants = {
+    phone: {
+      rotate: [0, 10, -10, 10, -10, 0],
+      transition: {
+        duration: 0.5,
+        repeat: Infinity,
+        repeatType: "loop"
+      }
+    },
+    email: {
+      scale: [1, 1.1, 1],
+      transition: {
+        duration: 1,
+        repeat: Infinity,
+        repeatType: "loop"
+      }
+    }
+  } as const;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -55,101 +51,98 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-50">
-      {/* Background Artistic Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gold-500/10 rounded-full blur-3xl -translate-x-1/3 -translate-y-1/3" />
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-primary-500/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
-      </div>
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-5xl font-extralight tracking-tight text-neutral-900 mb-6"
+          >
+            Get in <span className="font-semibold text-blue-600">Touch</span>
+          </motion.h2>
+          <p className="text-xl text-neutral-600 max-w-2xl mx-auto font-light">
+          <p>We&apos;re here to help you create your perfect look. Reach out and let&apos;s start your beauty journey.</p>
+          </p>
+        </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left Side - Artistic Contact Information */}
-          <motion.div 
+        <div className="grid md:grid-cols-2 gap-16">
+          {/* Contact Information */}
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8 relative"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-10"
           >
-            <div className="absolute -top-16 -left-16 w-48 h-48 bg-gold-500/20 rounded-full blur-2xl" />
-            
-            <h2 className="text-6xl font-serif font-bold text-neutral-900 mb-6 relative z-10">
-              Let's <span className="text-gold-600">Create</span> Magic
-            </h2>
-            
-            <p className="text-xl text-neutral-700 mb-10 leading-relaxed">
-              Your beauty journey begins with a conversation. Whether it's a bridal transformation or a special occasion look, we're here to bring your vision to life.
-            </p>
-
-            <div className="space-y-6">
-              <div className="flex items-center space-x-6 group">
-                <div className="bg-gold-500/20 group-hover:bg-gold-500/40 p-4 rounded-full transition-all duration-300">
-                  <FaEnvelope className="text-gold-600 text-3xl" />
-                </div>
+            <div className="space-y-8">
+              <div className="flex items-center space-x-6">
+                <motion.div 
+                  animate="email"
+                  variants={iconAnimations}
+                  className="bg-blue-50 p-4 rounded-full shadow-sm"
+                >
+                  <FaEnvelope className="text-blue-600 text-2xl" />
+                </motion.div>
                 <div>
-                  <p className="text-neutral-600 font-medium">Email Us</p>
+                  <p className="text-neutral-500 text-xs uppercase tracking-widest">Email</p>
                   <a 
                     href="mailto:hello@magictouch.com" 
-                    className="text-2xl text-neutral-900 hover:text-gold-600 transition-colors"
+                    className="text-2xl text-neutral-900 font-light hover:text-blue-600 transition-colors duration-300"
                   >
                     hello@magictouch.com
                   </a>
+                  <p className="text-blue-600 text-xs mt-1 font-medium">
+                    Instant Reply
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-6 group">
-                <div className="bg-primary-500/20 group-hover:bg-primary-500/40 p-4 rounded-full transition-all duration-300">
-                  <FaPhone className="text-primary-600 text-3xl" />
-                </div>
+              <div className="flex items-center space-x-6">
+                <motion.div 
+                  animate="phone"
+                  variants={iconAnimations}
+                  className="bg-blue-50 p-4 rounded-full shadow-sm"
+                >
+                  <FaPhone className="text-blue-600 text-2xl" />
+                </motion.div>
                 <div>
-                  <p className="text-neutral-600 font-medium">Call Us</p>
+                  <p className="text-neutral-500 text-xs uppercase tracking-widest">Phone</p>
                   <a 
                     href="tel:+918123456789" 
-                    className="text-2xl text-neutral-900 hover:text-primary-600 transition-colors"
+                    className="text-2xl text-neutral-900 font-light hover:text-blue-600 transition-colors duration-300"
                   >
                     +91 81234 56789
                   </a>
+                  <p className="text-green-600 text-xs mt-1 font-medium">
+                    Available Now
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-10 flex space-x-6">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`text-4xl ${social.color} transition-transform hover:scale-110`}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <social.icon />
-                </motion.a>
-              ))}
-            </div>
+            <div className="h-px bg-neutral-200 w-full" />
+
+            <p className="text-neutral-600 font-light leading-relaxed">
+              Our team is available Monday to Saturday, 10 AM to 7 PM. We look forward to hearing from you and bringing your beauty vision to life.
+            </p>
           </motion.div>
 
-          {/* Right Side - Elegant Contact Form */}
-          <motion.div 
+          {/* Contact Form */}
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-white rounded-3xl shadow-2xl p-12 relative overflow-hidden"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-neutral-50 rounded-2xl p-12 shadow-lg"
           >
-            {/* Decorative Overlay */}
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-gold-500 to-primary-500" />
-            
-            <h3 className="text-4xl font-serif font-bold text-neutral-900 mb-8 text-center">
-              Book Your <span className="text-gold-600">Consultation</span>
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label 
                     htmlFor="name" 
-                    className="block text-neutral-600 mb-2"
+                    className={`block mb-3 text-sm transition-colors duration-300 ${
+                      focusedField === 'name' ? 'text-blue-600' : 'text-neutral-600'
+                    }`}
                   >
                     Full Name
                   </label>
@@ -159,15 +152,19 @@ export default function ContactUs() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    onFocus={() => setFocusedField('name')}
+                    onBlur={() => setFocusedField(null)}
                     required
-                    className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-all"
-                    placeholder="Your Name"
+                    className="w-full px-0 py-3 border-b-2 border-neutral-300 focus:border-blue-600 text-neutral-900 font-light text-lg bg-transparent transition-colors duration-300"
+                    placeholder="Enter your name"
                   />
                 </div>
                 <div>
                   <label 
                     htmlFor="phone" 
-                    className="block text-neutral-600 mb-2"
+                    className={`block mb-3 text-sm transition-colors duration-300 ${
+                      focusedField === 'phone' ? 'text-blue-600' : 'text-neutral-600'
+                    }`}
                   >
                     Phone Number
                   </label>
@@ -177,9 +174,11 @@ export default function ContactUs() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    onFocus={() => setFocusedField('phone')}
+                    onBlur={() => setFocusedField(null)}
                     required
-                    className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-all"
-                    placeholder="+91 "
+                    className="w-full px-0 py-3 border-b-2 border-neutral-300 focus:border-blue-600 text-neutral-900 font-light text-lg bg-transparent transition-colors duration-300"
+                    placeholder="+91"
                   />
                 </div>
               </div>
@@ -187,7 +186,9 @@ export default function ContactUs() {
               <div>
                 <label 
                   htmlFor="email" 
-                  className="block text-neutral-600 mb-2"
+                  className={`block mb-3 text-sm transition-colors duration-300 ${
+                    focusedField === 'email' ? 'text-blue-600' : 'text-neutral-600'
+                  }`}
                 >
                   Email Address
                 </label>
@@ -197,8 +198,10 @@ export default function ContactUs() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  onFocus={() => setFocusedField('email')}
+                  onBlur={() => setFocusedField(null)}
                   required
-                  className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-all"
+                  className="w-full px-0 py-3 border-b-2 border-neutral-300 focus:border-blue-600 text-neutral-900 font-light text-lg bg-transparent transition-colors duration-300"
                   placeholder="you@example.com"
                 />
               </div>
@@ -206,7 +209,9 @@ export default function ContactUs() {
               <div>
                 <label 
                   htmlFor="message" 
-                  className="block text-neutral-600 mb-2"
+                  className={`block mb-3 text-sm transition-colors duration-300 ${
+                    focusedField === 'message' ? 'text-blue-600' : 'text-neutral-600'
+                  }`}
                 >
                   Your Message
                 </label>
@@ -215,21 +220,23 @@ export default function ContactUs() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
+                  onFocus={() => setFocusedField('message')}
+                  onBlur={() => setFocusedField(null)}
                   required
-                  rows={5}
-                  className="w-full px-4 py-3 border-2 border-neutral-200 rounded-xl focus:border-gold-500 focus:ring-2 focus:ring-gold-200 transition-all resize-none"
+                  rows={4}
+                  className="w-full px-0 py-3 border-b-2 border-neutral-300 focus:border-blue-600 text-neutral-900 font-light text-lg bg-transparent transition-colors duration-300 resize-none"
                   placeholder="Tell us about your dream look..."
                 />
               </div>
 
               <motion.button
                 type="submit"
-                className="w-full bg-gradient-to-r from-gold-500 to-primary-500 text-white py-4 rounded-xl font-semibold text-lg uppercase tracking-wider hover:from-gold-600 hover:to-primary-600 transition-all duration-300 flex items-center justify-center space-x-3"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="w-full bg-blue-600 text-white py-4 rounded-full font-medium uppercase tracking-wider hover:bg-blue-700 transition-all duration-300 flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl"
               >
                 <FaPaperPlane />
-                <span>Send Consultation Request</span>
+                <span>Send Message</span>
               </motion.button>
             </form>
           </motion.div>

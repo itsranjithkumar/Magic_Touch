@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-export default function Testimonials() {
+const Testimonials = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const testimonials = [
@@ -14,64 +14,28 @@ export default function Testimonials() {
       rating: 5,
     },
     {
-      name: "Anjali Reddy",
+      name: "Aisha Khan",
       role: "Wedding Couture Maestro",
       quote: "Beyond mere styling, Magic Touch crafts an experience of sublime beauty that transcends traditional boundaries of makeup and design.",
-      rating: 5,
+      rating: 4.5,
     },
     {
-      name: "Deepa Kumar",
-      role: "Connoisseur of Elegance",
-      quote: "Witnessing Magic Touch's artistry is like watching poetry come to life - delicate, powerful, and breathtakingly beautiful.",
+      name: "Emily Rodriguez",
+      role: "Bridal Fashion Innovator",
+      quote: "Magic Touch doesn't just do makeup, they create a transformative experience that elevates your inner confidence.",
       rating: 5,
     }
   ];
 
-  const navigateTestimonial = (direction: 'next' | 'prev') => {
-    const totalTestimonials = testimonials.length;
-    setActiveTestimonial((prev) => 
-      direction === 'next' 
-        ? (prev + 1) % totalTestimonials 
-        : (prev - 1 + totalTestimonials) % totalTestimonials
-    );
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
+  const navigateTestimonial = useCallback((direction: 'next' | 'prev') => {
+    setActiveTestimonial((prev) => {
+      if (direction === 'next') {
+        return (prev + 1) % testimonials.length;
+      } else {
+        return (prev - 1 + testimonials.length) % testimonials.length;
       }
-    }
-  };
-
-  const testimonialVariants = {
-    hidden: { 
-      opacity: 0, 
-      x: -50,
-      scale: 0.9
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100
-      }
-    },
-    exit: {
-      opacity: 0,
-      x: 50,
-      scale: 0.9,
-      transition: { 
-        duration: 0.3 
-      }
-    }
-  };
+    });
+  }, [testimonials.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -79,7 +43,54 @@ export default function Testimonials() {
     }, 7000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [navigateTestimonial]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
+      }
+    }
+  };
+
+  const testimonialVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 50 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -50,
+      transition: {
+        duration: 0.3 
+      }
+    }
+  };
+
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+
+    return (
+      <div className="flex justify-center space-x-1">
+        {[...Array(fullStars)].map((_, index) => (
+          <FaStar key={`full-${index}`} className="text-yellow-500 text-xl" />
+        ))}
+        {hasHalfStar && (
+          <FaStar key="half-star" className="text-yellow-500 text-xl" style={{ opacity: 0.5 }} />
+        )}
+      </div>
+    );
+  };
 
   return (
     <motion.section 
@@ -128,58 +139,28 @@ export default function Testimonials() {
               <div className="w-full max-w-2xl space-y-6 text-center">
                 <FaQuoteLeft className="text-primary-600 text-5xl mb-6 opacity-20 mx-auto" />
                 
-                <p className="text-2xl md:text-3xl font-light text-neutral-800 mb-8 italic leading-relaxed">
-                  "{testimonials[activeTestimonial].quote}"
-                </p>
+                <blockquote className="text-2xl md:text-3xl font-light text-neutral-800 mb-8 italic leading-relaxed">
+                  &quot;{testimonials[activeTestimonial].quote}&quot;
+                </blockquote>
                 
                 <div>
                   <h3 className="text-3xl md:text-4xl font-serif font-semibold text-neutral-900 mb-3 tracking-wide">
                     {testimonials[activeTestimonial].name}
                   </h3>
-                  <p className="text-primary-600 text-xl font-medium mb-4">
+                  <div className="text-primary-600 text-xl font-medium mb-4">
                     {testimonials[activeTestimonial].role}
-                  </p>
-                  
-                  <div className="flex justify-center space-x-2">
-                    {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
-                      <FaStar 
-                        key={i} 
-                        className="text-yellow-500 text-3xl" 
-                        style={{ 
-                          animation: `pulse 1.5s infinite`,
-                          animationDelay: `${i * 0.2}s`
-                        }}
-                      />
-                    ))}
                   </div>
+
+                  {/* Rating Stars */}
+                  {renderStars(testimonials[activeTestimonial].rating)}
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Navigation Dots */}
-        <div className="flex justify-center mt-12 space-x-4">
-          {testimonials.map((_, index) => (
-            <motion.button
-              key={index}
-              onClick={() => setActiveTestimonial(index)}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                activeTestimonial === index
-                  ? 'bg-primary-600 scale-125 w-6'
-                  : 'bg-primary-200 hover:bg-primary-300'
-              }`}
-            />
-          ))}
-        </div>
       </div>
-
-      {/* Optional: Background Gradient Overlay */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
-      }} />
     </motion.section>
   );
-}
+};
+
+export default Testimonials;
