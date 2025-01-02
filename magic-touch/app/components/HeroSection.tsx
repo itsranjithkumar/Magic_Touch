@@ -16,17 +16,17 @@ const HeroSection: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "&quot;Magic Touch transformed me into the most beautiful version of myself on my wedding day.&quot;",
+      quote: "Magic Touch transformed me into the most beautiful version of myself on my wedding day.",
       author: "Sophia Rodriguez",
       role: "Bride 2023"
     },
     {
-      quote: "&quot;Every detail was perfect. The makeup artists are true artists of beauty.&quot;",
+      quote: "Every detail was perfect. The makeup artists are true artists of beauty.",
       author: "Emily Chen",
       role: "Bride 2022"
     },
     {
-      quote: "&quot;I felt like a princess, all thanks to the incredible team at Magic Touch.&quot;",
+      quote: "I felt like a princess, all thanks to the incredible team at Magic Touch.",
       author: "Olivia Thompson",
       role: "Bride 2024"
     }
@@ -44,7 +44,7 @@ const HeroSection: React.FC = () => {
       description: "Tailored looks that reflect your individual beauty"
     },
     {
-      icon: FaGem,
+      icon: FaHeart,
       title: "Premium Experience",
       description: "Elegant service from consultation to final touch"
     }
@@ -59,44 +59,81 @@ const HeroSection: React.FC = () => {
   }, [testimonials.length]);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-white to-rose-100 overflow-hidden">
-      {/* Elegant Background Overlay */}
-      <div className="absolute inset-0 opacity-10 bg-[url('/elegant-pattern.svg')] pointer-events-none"></div>
-
-      {/* Luxurious Geometric Shapes */}
+    <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-rose-50 via-white to-rose-100 overflow-hidden">
+      {/* Enhanced Background Overlay with Animated Elements */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.5 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.1 }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+        className="absolute inset-0 bg-[url('/elegant-pattern.svg')] pointer-events-none"
+      />
+      
+      {/* Floating Decorative Elements */}
+      <motion.div
+        initial={{ x: -100, y: -100, rotate: 0 }}
         animate={{ 
-          opacity: [0.1, 0.2, 0.1],
-          scale: [0.5, 0.7, 0.5],
-          rotate: [0, 360]
+          x: ['-100px', '100px', '-100px'],
+          y: ['-100px', '100px', '-100px'],
+          rotate: [0, 360, 0]
         }}
         transition={{ 
-          duration: 15, 
-          repeat: Infinity,
-          ease: "easeInOut"
+          duration: 20, 
+          repeat: Infinity, 
+          ease: "linear" 
         }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl"
-      ></motion.div>
+        className="absolute top-0 left-0 w-32 h-32 bg-rose-200/30 rounded-full blur-2xl opacity-50 z-0"
+      />
+      <motion.div
+        initial={{ x: 100, y: 100, rotate: 0 }}
+        animate={{ 
+          x: ['100px', '-100px', '100px'],
+          y: ['100px', '-100px', '100px'],
+          rotate: [0, -360, 0]
+        }}
+        transition={{ 
+          duration: 25, 
+          repeat: Infinity, 
+          ease: "linear" 
+        }}
+        className="absolute bottom-0 right-0 w-48 h-48 bg-rose-100/30 rounded-full blur-3xl opacity-40 z-0"
+      />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left Content - Elegant Typography */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow flex flex-col">
+        {/* Image Section - Prominent on Mobile */}
+        <div className="w-full mb-6 md:hidden">
+          <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl group">
+            <Image 
+              src="/bride.jpg"
+              alt="Elegant Bridal Makeup"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-top 
+                transition-all duration-700 
+                group-hover:scale-110 
+                group-hover:brightness-90"
+            />
+            <div className="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/10 transition-all duration-500 z-10"></div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center flex-grow">
+          {/* Left Content - Mobile-First Typography */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6 text-center md:text-left order-2 md:order-1"
           >
             <div className="space-y-4">
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-6xl font-serif font-bold text-gray-900 leading-tight"
+                className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-gray-900 leading-tight"
               >
                 Unveil Your
-                <span className="block text-rose-600 font-script">
+                <span className="block text-rose-600 font-script text-3xl sm:text-4xl md:text-5xl mt-2">
                   Bridal Elegance
                 </span>
               </motion.h1>
@@ -105,7 +142,7 @@ const HeroSection: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-xl text-gray-600 font-light"
+                className="text-base sm:text-lg md:text-xl text-gray-600 font-light"
               >
                 Elevate your wedding day with bespoke makeup artistry that captures your inner and outer beauty.
               </motion.p>
@@ -119,12 +156,16 @@ const HeroSection: React.FC = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 + index * 0.2 }}
-                  className="flex items-center space-x-4 bg-white/60 backdrop-blur-sm p-4 rounded-xl shadow-md"
+                  className="flex items-center space-x-4 bg-white/60 backdrop-blur-sm p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow"
                 >
-                  <service.icon className="text-rose-500 text-3xl" />
+                  <service.icon className="text-rose-500 text-3xl flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">{service.title}</h3>
-                    <p className="text-gray-600 text-sm">{service.description}</p>
+                    <h3 className="font-semibold text-gray-800 text-base sm:text-lg">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      {service.description}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -135,101 +176,107 @@ const HeroSection: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
-              className="flex space-x-4"
+              className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start"
             >
               <Link 
                 href="#consultation"
-                className="px-8 py-4 bg-rose-600 text-white rounded-full hover:bg-rose-700 transition-colors flex items-center space-x-2"
+                className="px-6 py-3 bg-rose-600 text-white rounded-full 
+                  transition-all duration-300 
+                  hover:bg-rose-700 
+                  hover:shadow-xl 
+                  hover:scale-105 
+                  active:scale-95 
+                  flex items-center justify-center space-x-2"
               >
-                Book Consultation
-                <FaHeart className="ml-2" />
+                <span>Book Consultation</span>
+                <motion.span
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 20, -20, 0]
+                  }}
+                  transition={{ 
+                    duration: 0.5, 
+                    repeat: Infinity, 
+                    repeatType: "loop" 
+                  }}
+                >
+                  <FaHeart className="ml-2" />
+                </motion.span>
               </Link>
               <button 
                 onClick={() => setIsVideoModalOpen(true)}
-                className="px-8 py-4 border-2 border-rose-600 text-rose-600 rounded-full hover:bg-rose-50 transition-colors flex items-center space-x-2"
+                className="px-6 py-3 border-2 border-rose-600 text-rose-600 rounded-full 
+                  transition-all duration-300 
+                  hover:bg-rose-50 
+                  hover:shadow-md 
+                  hover:scale-105 
+                  active:scale-95 
+                  flex items-center justify-center space-x-2"
               >
-                <FaPlay />
-                Watch Showcase
+                <motion.span
+                  animate={{ 
+                    rotate: [0, 360],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 1, 
+                    repeat: Infinity, 
+                    repeatType: "loop" 
+                  }}
+                >
+                  <FaPlay className="mr-2" />
+                </motion.span>
+                <span>Watch Showcase</span>
               </button>
+            </motion.div>
+
+            {/* Mobile Testimonial */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="md:hidden mt-4 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-4 text-center"
+            >
+              <FaQuoteRight className="text-rose-500 mb-4 mx-auto" />
+              <p className="text-gray-800 italic mb-4 text-sm">
+                "{testimonials[activeTestimonial].quote}"
+              </p>
+              <div>
+                <p className="font-semibold text-gray-900 text-base">
+                  {testimonials[activeTestimonial].author}
+                </p>
+                <p className="text-xs text-gray-600">
+                  {testimonials[activeTestimonial].role}
+                </p>
+              </div>
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Elegant Bride Image */}
+          {/* Desktop Image Section */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative hidden md:block"
+            className="relative hidden md:block order-last"
           >
-            <div className="relative">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="w-full h-[700px] rounded-3xl overflow-hidden shadow-2xl"
-              >
-                <Image 
-                  src="/bride.jpg"
-                  alt="Elegant Bridal Makeup"
-                  fill
-                  priority
-                  className="object-cover object-top transform hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-
-              {/* Testimonial Overlay */}
-              <AnimatePresence mode="wait">
-                {testimonials.map((testimonial, index) => (
-                  activeTestimonial === index && (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{ duration: 0.5 }}
-                      className="absolute -bottom-10 -right-10 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 max-w-xs"
-                    >
-                      <FaQuoteRight className="text-rose-500 mb-4" />
-                      <p className="text-gray-800 italic mb-4">{testimonial.quote}</p>
-                      <div>
-                        <p className="font-semibold text-gray-900">{testimonial.author}</p>
-                        <p className="text-sm text-gray-600">{testimonial.role}</p>
-                      </div>
-                    </motion.div>
-                  )
-                ))}
-              </AnimatePresence>
+            <div className="relative w-full aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl group">
+              <Image 
+                src="/bride.jpg"
+                alt="Elegant Bridal Makeup"
+                fill
+                priority
+                sizes="(max-width: 1200px) 50vw, 33vw"
+                className="object-cover object-top 
+                  transition-all duration-700 
+                  group-hover:scale-110 
+                  group-hover:brightness-90 
+                  group-hover:contrast-125"
+              />
+              <div className="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/10 transition-all duration-500 z-10"></div>
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Video Modal */}
-      <AnimatePresence>
-        {isVideoModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
-            onClick={() => setIsVideoModalOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.5, opacity: 0 }}
-              className="bg-white rounded-3xl p-8 max-w-4xl w-full"
-            >
-              <div className="aspect-w-16 aspect-h-9">
-                <iframe 
-                  src="https://www.youtube.com/embed/BRIDAL_SHOWCASE" 
-                  title="Magic Touch Bridal Showcase"
-                  allowFullScreen
-                  className="w-full h-full rounded-2xl"
-                ></iframe>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
