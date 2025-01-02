@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #FF6B6B;
+  --secondary-color: #4ECDC4;
+  --background-color: #FFF5F5;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply antialiased bg-white text-gray-900;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-magic {
+    background: linear-gradient(135deg, #FFF5F5, #FFFFFF);
+  }
+}
+
+
+
+
+:root {
+  --gold-500: #d4af37;
+  --gold-600: #b8860b;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+.text-gold-500 {
+  color: var(--gold-500);
+}
+
+.bg-gold-500 {
+  background-color: var(--gold-500);
+}
+
+.bg-gold-600 {
+  background-color: var(--gold-600);
+}
+
