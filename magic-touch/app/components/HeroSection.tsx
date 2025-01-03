@@ -5,7 +5,8 @@ import {
   FaPalette,
   FaHeart,
   FaPlay,
-  FaQuoteRight
+  FaQuoteRight,
+  FaWhatsapp
 } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -57,6 +58,12 @@ const HeroSection: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [testimonials.length]);
+
+  const openWhatsAppChat = () => {
+    const whatsappNumber = '950055987'; // Your WhatsApp number
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-rose-50 via-white to-rose-100 overflow-hidden">
@@ -200,83 +207,84 @@ const HeroSection: React.FC = () => {
                     repeatType: "loop" 
                   }}
                 >
-                  <FaHeart className="ml-2" />
+                  ✨
                 </motion.span>
               </Link>
               <button 
                 onClick={() => setIsVideoModalOpen(true)}
                 className="px-6 py-3 border-2 border-rose-600 text-rose-600 rounded-full 
                   transition-all duration-300 
-                  hover:bg-rose-50 
-                  hover:shadow-md 
+                  hover:bg-rose-600 
+                  hover:text-white 
+                  hover:shadow-xl 
                   hover:scale-105 
                   active:scale-95 
                   flex items-center justify-center space-x-2"
               >
-                <motion.span
-                  animate={{ 
-                    rotate: [0, 360],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    duration: 1, 
-                    repeat: Infinity, 
-                    repeatType: "loop" 
-                  }}
-                >
-                  <FaPlay className="mr-2" />
-                </motion.span>
-                <span>Watch Showcase</span>
+                <FaPlay className="mr-2" />
+                <span>Watch Reel</span>
               </button>
             </motion.div>
+          </motion.div>
 
-            {/* Mobile Testimonial */}
+          {/* Right Image Section - Hidden on Mobile */}
+          <div className="hidden md:block relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl group">
+            <Image 
+              src="/bride.jpg"
+              alt="Elegant Bridal Makeup"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-top 
+                transition-all duration-700 
+                group-hover:scale-110 
+                group-hover:brightness-90"
+            />
+            <div className="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/10 transition-all duration-500 z-10"></div>
+          </div>
+        </div>
+
+        {/* Testimonial Section */}
+        <div className="mt-16 text-center relative">
+          <AnimatePresence mode="wait">
             <motion.div
+              key={activeTestimonial}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="md:hidden mt-4 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-4 text-center"
+              className="max-w-2xl mx-auto"
             >
-              <FaQuoteRight className="text-rose-500 mb-4 mx-auto" />
-              <p className="text-gray-800 italic mb-4 text-sm">
+              <FaQuoteRight className="text-4xl text-rose-300 mx-auto mb-4" />
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-700 italic mb-4">
                 "{testimonials[activeTestimonial].quote}"
               </p>
-              <div>
-                <p className="font-semibold text-gray-900 text-base">
-                  {testimonials[activeTestimonial].author}
-                </p>
-                <p className="text-xs text-gray-600">
-                  {testimonials[activeTestimonial].role}
-                </p>
-              </div>
+              <p className="text-rose-600 font-semibold">
+                {testimonials[activeTestimonial].author}
+              </p>
+              <p className="text-gray-500 text-sm">
+                {testimonials[activeTestimonial].role}
+              </p>
             </motion.div>
-          </motion.div>
-
-          {/* Desktop Image Section */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative hidden md:block order-last"
-          >
-            <div className="relative w-full aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl group">
-              <Image 
-                src="/bride.jpg"
-                alt="Elegant Bridal Makeup"
-                fill
-                priority
-                sizes="(max-width: 1200px) 50vw, 33vw"
-                className="object-cover object-top 
-                  transition-all duration-700 
-                  group-hover:scale-110 
-                  group-hover:brightness-90 
-                  group-hover:contrast-125"
-              />
-              <div className="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/10 transition-all duration-500 z-10"></div>
-            </div>
-          </motion.div>
+          </AnimatePresence>
         </div>
       </div>
+
+      {/* WhatsApp Chat Button - Fixed Position */}
+      <motion.div 
+        onClick={openWhatsAppChat}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-6 right-6 z-50 cursor-pointer 
+          bg-green-500 text-white rounded-full p-3 
+          shadow-2xl hover:shadow-lg 
+          transition-all duration-300 
+          flex items-center justify-center"
+      >
+        <FaWhatsapp className="text-4xl" />
+      </motion.div>
     </div>
   );
 };
