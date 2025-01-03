@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
                     href="tel:+918123456789" 
                     className="text-neutral-900 hover:text-blue-600 transition-colors"
                   >
-                    +91 81234 56789
+                                        +91 95005 59877
                   </a>
                   <p className="text-green-600 text-xs mt-1 font-medium">
                     Available Now
@@ -167,7 +167,7 @@ const Footer: React.FC = () => {
                 <div>
                   <p className="text-neutral-500 text-sm uppercase tracking-wider">Location</p>
                   <span className="text-neutral-900">
-                    Silicon Valley, California
+                  Indian Oil opposite, Sathyamangalam, Tamil Nadu, India
                   </span>
                 </div>
               </div>

@@ -112,8 +112,8 @@ export default function ContactUs() {
                     href="tel:+918123456789" 
                     className="text-2xl text-neutral-900 font-light hover:text-blue-600 transition-colors duration-300"
                   >
-                    +91 81234 56789
-                  </a>
+                +91 95005 59877
+                </a>
                   <p className="text-green-600 text-xs mt-1 font-medium">
                     Available Now
                   </p>
