@@ -61,11 +61,10 @@ const HeroSection: React.FC = () => {
   }, [testimonials.length]);
 
   const openWhatsAppChat = () => {
-    const whatsappNumber = '950055987'; // Your WhatsApp number
+    const whatsappNumber = '9342209140'; // Updated WhatsApp number
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}`;
     window.open(whatsappUrl, '_blank');
   };
-
   return (
     <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-rose-50 via-white to-rose-100 overflow-hidden">
       {/* Enhanced Background Overlay with Animated Elements */}
