@@ -13,7 +13,8 @@ import Link from 'next/link';
 
 const HeroSection: React.FC = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  // Remove unused state or add a modal if needed
+  // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const testimonials = [
     {
@@ -211,7 +212,6 @@ const HeroSection: React.FC = () => {
                 </motion.span>
               </Link>
               <button 
-                onClick={() => setIsVideoModalOpen(true)}
                 className="px-6 py-3 border-2 border-rose-600 text-rose-600 rounded-full 
                   transition-all duration-300 
                   hover:bg-rose-600 
@@ -257,7 +257,7 @@ const HeroSection: React.FC = () => {
             >
               <FaQuoteRight className="text-4xl text-rose-300 mx-auto mb-4" />
               <p className="text-lg sm:text-xl md:text-2xl text-gray-700 italic mb-4">
-                "{testimonials[activeTestimonial].quote}"
+                &quot;{testimonials[activeTestimonial].quote}&quot;
               </p>
               <p className="text-rose-600 font-semibold">
                 {testimonials[activeTestimonial].author}
